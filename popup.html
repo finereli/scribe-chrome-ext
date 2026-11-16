@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Scribe</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<header>
+  <div class="titlebox">
+    <input id="title" class="title" spellcheck="false" aria-label="Call title" placeholder="Scribe">
+    <div class="sub"><span id="app"></span><span id="clock"></span></div>
+  </div>
+  <nav class="actions">
+    <button id="claude" class="icon" title="Copy the transcript and open Claude"><img src="img/claude.svg" alt="Claude"></button>
+    <button id="chatgpt" class="icon" title="Copy the transcript and open ChatGPT"><span class="mask chatgpt"></span></button>
+    <button id="copy" class="icon" title="Copy transcript">
+      <svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+    </button>
+    <button id="download" class="icon" title="Download the recording and transcript">
+      <svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
+    </button>
+    <button id="history" class="icon" title="Past calls">
+      <svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>
+    </button>
+    <button id="gear" class="icon" title="Settings">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+    </button>
+  </nav>
+</header>
+
+<div id="banner" class="banner" hidden></div>
+
+<div id="viewing" class="viewing" hidden><span id="viewing-text"></span><button id="back" class="link">Back</button></div>
+
+<main id="transcript"></main>
+
+<footer>
+  <button id="rec" class="rec" title="Record (the call in this tab)"><span></span></button>
+  <div class="meters">
+    <div class="meter-row"><span class="who me">Me</span><div class="meter" id="meter-me"></div></div>
+    <div class="meter-row"><span class="who them" id="them-label">Them</span><div class="meter" id="meter-them"></div></div>
+  </div>
+</footer>
+
+<section id="settings" class="settings" hidden>
+  <div class="settings-head">
+    <h2>Settings</h2>
+    <button id="close-settings" class="icon" title="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <label class="field">
+    <span>OpenAI API key</span>
+    <div class="key-saved" id="key-saved" hidden><span id="key-saved-text"></span><button id="change-key" class="link">Change</button></div>
+    <div class="key-row" id="key-row">
+      <input id="key" type="password" placeholder="sk-…" spellcheck="false" autocomplete="off">
+      <button id="save-key" class="button">Save</button>
+    </div>
+    <small id="key-status">Your key stays in this browser and only goes to OpenAI. <a href="https://platform.openai.com/api-keys" target="_blank">Make a key</a></small>
+  </label>
+  <label class="field">
+    <span>Microphone</span>
+    <select id="mic"></select>
+  </label>
+  <label class="check">
+    <input id="suggest" type="checkbox">
+    <span>Suggest recording when a Meet or WhatsApp call starts</span>
+  </label>
+  <p class="hint">Alt+Shift+S opens Scribe from any tab. <a href="#" id="shortcuts">Change it</a></p>
+</section>
+
+<section id="past" class="settings" hidden>
+  <div class="settings-head">
+    <h2>Past calls</h2>
+    <button id="close-past" class="icon" title="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <div id="past-list" class="past-list"></div>
+</section>
+
+<div id="toast" class="toast" hidden></div>
+<script type="module" src="popup.js"></script>
+</body>
+</html>

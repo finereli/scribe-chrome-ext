@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Set up Scribe</title>
+<link rel="stylesheet" href="popup.css">
+<style>
+  body { width: auto; height: auto; min-height: 100vh; overflow: auto; display: block; font-size: 14px; }
+  .page { max-width: 520px; margin: 0 auto; padding: 56px 16px; }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .brand img { width: 44px; height: 44px; }
+  h1 { font-size: 24px; margin: 0; }
+  .lede { color: var(--muted); margin: 0 0 32px; }
+  .step { display: grid; grid-template-columns: 28px 1fr; gap: 4px 12px; padding: 20px 0; border-top: 1px solid var(--line); }
+  .num { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--hover); font-size: 12px; font-weight: 600; }
+  .step.done .num { background: var(--green); color: #fff; }
+  .step h2 { font-size: 15px; margin: 1px 0 4px; }
+  .step p { margin: 0 0 12px; color: var(--muted); }
+  .step .body { grid-column: 2; }
+  [hidden] { display: none !important; }
+  .status a { cursor: pointer; }
+  .status { font-size: 12.5px; margin-top: 8px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="brand"><img src="img/logo.svg" alt=""><h1>Scribe</h1></div>
+  <p class="lede">Transcribes your browser calls, Meet and WhatsApp included, with your own OpenAI key. No bot joins.</p>
+
+  <div class="step" id="step-key">
+    <div class="num">1</div>
+    <div class="body">
+      <h2>Add your OpenAI key</h2>
+      <p>Your microphone is "Me" in the transcript and the call tab is "Them". Each turn goes to OpenAI on your own key, about 30 cents per call-hour. <a href="https://platform.openai.com/api-keys" target="_blank">Make a key</a></p>
+      <div class="status" id="key-saved" hidden></div>
+      <div class="key-row" id="key-row">
+        <input id="key" type="password" placeholder="sk-…" spellcheck="false" autocomplete="off">
+        <button class="button primary" id="save">Save</button>
+      </div>
+      <div class="status" id="key-status"></div>
+    </div>
+  </div>
+
+  <div class="step" id="step-mic">
+    <div class="num">2</div>
+    <div class="body">
+      <h2>Let Scribe hear your microphone</h2>
+      <p>Scribe records your side of the call from the microphone. The browser asks once, here, because the recorder runs in the background where it can't ask.</p>
+      <button class="button primary" id="allow-mic">Allow Microphone</button>
+      <div class="status" id="mic-status"></div>
+    </div>
+  </div>
+
+  <div class="step" id="step-use">
+    <div class="num">3</div>
+    <div class="body">
+      <h2>Pin Scribe and take a call</h2>
+      <p>Pin Scribe from the puzzle-piece menu. When a Meet or WhatsApp call starts, Scribe offers to record it. On any other site, click the Scribe icon and press the red button. Alt+Shift+S opens it from the keyboard.</p>
+    </div>
+  </div>
+</div>
+<script type="module" src="setup.js"></script>
+</body>
+</html>

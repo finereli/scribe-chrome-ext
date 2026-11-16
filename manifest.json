@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4hakfX2lvIe/u2c/68AZlViQzUOaj9SX08+xAwpjHOkVjfLiMF/ss9oC8S+4Msw8gqqLY9HpUR0QA7zFk3TeelKcTPg/+i3iU7a0cMa8OVx2Z50uE5j5QyIKA3TXFOPnqaVoZVh1aDS1gObvvY9NgGXrkMXgZhRwa/jnvCeUd4UNd+7/3+LBeWLW9AlY/PPDuhsYucEd+tzqfGCTRSoNks1xd9OpnQDKsYeqhyZhAeHYrGMEnvdqQH0oUc5wxaRMXmL29qrEQZsYAjmPU/YJI6mvG3KwKhvz/L3vrxOtoCCvJNbEIJpoxn6PjPG7SQ/htCkkjIzWlALDv8mGkqtYkwIDAQAB",
+  "name": "Scribe",
+  "version": "0.1.0",
+  "description": "Transcribe your Google Meet and WhatsApp calls with your own OpenAI key, and paste them into Claude or ChatGPT. No bot joins.",
+  "minimum_chrome_version": "127",
+  "permissions": ["tabCapture", "audioCapture", "offscreen", "storage", "unlimitedStorage", "notifications", "downloads", "downloads.ui"],
+  "host_permissions": [
+    "https://api.openai.com/*",
+    "https://meet.google.com/*",
+    "https://web.whatsapp.com/*"
+  ],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*", "https://web.whatsapp.com/*"],
+      "js": ["content/hook.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://meet.google.com/*", "https://web.whatsapp.com/*"],
+      "js": ["content/detect.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Scribe",
+    "default_icon": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png" }
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": { "default": "Alt+Shift+S" },
+      "description": "Open Scribe"
+    }
+  },
+  "icons": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" }
+}
